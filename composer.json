@@ -1,8 +1,8 @@
 {
-    "name": "kazist/notifications",
-    "description": "Kazist Notifications Manager.",
-    "keywords": ["kazist", "notifications manager"],
-    "homepage": "https://github.com/kazist/notifications",
+    "name": "kazist/notification",
+    "description": "Kazist Notification Manager.",
+    "keywords": ["kazist", "notification manager"],
+    "homepage": "https://github.com/kazist/notification",
     "license": "LGPL-3.0",
     "authors": [
         {
