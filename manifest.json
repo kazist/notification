@@ -1,9 +1,9 @@
 {
-    "name": "notification",
+    "name": "kazist/notification",
     "title": "Notification Manager",
     "icon": "icons\/notification.png",
     "extension": "component",
-    "path": "notification\/",
+    "path": "applications/Notification/",
     "description": "Notification Manager",
     "version": 1
 }
