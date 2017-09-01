@@ -1,17 +1,17 @@
 <?php
 
-namespace Notification\Messages\Code\Tables;
+namespace Notification\Inbox\Code\Tables;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Messages
+ * Inbox
  *
- * @ORM\Table(name="notification_messages")
+ * @ORM\Table(name="notification_inbox")
  * @ORM\Entity
  * @ORM\HasLifecycleCallbacks
  */
-class Messages extends \Kazist\Table\BaseTable
+class Inbox extends \Kazist\Table\BaseTable
 {
     /**
      * @var integer
@@ -25,35 +25,35 @@ class Messages extends \Kazist\Table\BaseTable
     /**
      * @var string
      *
-     * @ORM\Column(name="message", type="text", nullable=false)
+     * @ORM\Column(name="title", type="string", length=255)
      */
-    protected $message;
+    protected $title;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="created_by", type="integer", length=11, nullable=false)
+     * @ORM\Column(name="created_by", type="integer", length=11)
      */
     protected $created_by;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="date_created", type="datetime", nullable=false)
+     * @ORM\Column(name="date_created", type="datetime")
      */
     protected $date_created;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="modified_by", type="integer", length=11, nullable=false)
+     * @ORM\Column(name="modified_by", type="integer", length=11)
      */
     protected $modified_by;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="date_modified", type="datetime", nullable=false)
+     * @ORM\Column(name="date_modified", type="datetime")
      */
     protected $date_modified;
 
@@ -69,27 +69,27 @@ class Messages extends \Kazist\Table\BaseTable
     }
 
     /**
-     * Set message
+     * Set title
      *
-     * @param string $message
+     * @param string $title
      *
-     * @return Messages
+     * @return Inbox
      */
-    public function setMessage($message)
+    public function setTitle($title)
     {
-        $this->message = $message;
+        $this->title = $title;
 
         return $this;
     }
 
     /**
-     * Get message
+     * Get title
      *
      * @return string
      */
-    public function getMessage()
+    public function getTitle()
     {
-        return $this->message;
+        return $this->title;
     }
 
     /**

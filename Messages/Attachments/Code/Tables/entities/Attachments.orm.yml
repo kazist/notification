@@ -1,15 +1,24 @@
-Notification\Messages\Code\Tables\Messages:
-  table: notification_messages
+Notification\Messages\Attachments\Code\Tables\Attachments:
+  table: notification_messages_attachments
   type: entity
   id:
     id:
       type: integer
       generator: { strategy: AUTO }
   fields:
-    message:
-      name: message
-      type: text
+    media_id:
+      name: media_id
+      type: integer
+      length: 11
       nullable: false
+    message_id:
+      name: message_id
+      type: integer
+      length: 11
+      nullable: false
+    type:
+      name: type
+      type: text
     created_by:
       name: created_by
       type: integer
@@ -28,6 +37,9 @@ Notification\Messages\Code\Tables\Messages:
       name: date_modified
       type: datetime
       nullable: false
+  indexes:
+    message_id_index:
+      columns: [message_id]
   lifecycleCallbacks:
     prePersist:
       - onPrePersist
