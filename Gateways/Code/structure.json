@@ -67,6 +67,18 @@
                                     },
                                     {
                                         "group": {
+                                            "name": "Incoming Detail",
+                                            "unique_name": "incoming_detail",
+                                            "has_title": 1,
+                                            "user_right": 0,
+                                            "hide_on_new": 0,
+                                            "fields": [
+                                                "incoming"
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "group": {
                                             "name": "Modification Detail",
                                             "unique_name": "modification_detail",
                                             "has_title": 1,
@@ -88,6 +100,7 @@
             },
             "ommitted": [
                 "id",
+                "sendmail_command",
                 "mail_debuger",
                 "debug_exit"
             ]
@@ -630,6 +643,27 @@
             }
         },
         {
+            "name": "incoming",
+            "html_type": "yesno",
+            "mysql_type": "int",
+            "view_side": "",
+            "index": "",
+            "size": "",
+            "readonly": "0",
+            "default_value": "",
+            "format_value": "",
+            "parameters": {
+                "general": [],
+                "source": [],
+                "save": {
+                    "view_side": "both",
+                    "index": ""
+                },
+                "media": [],
+                "payment": []
+            }
+        },
+        {
             "dropdown_filter": "1",
             "nullable": "1",
             "name": "is_html",
@@ -822,6 +856,7 @@
             "ng.smtp_port",
             "ng.from_email",
             "ng.from_name",
+            "ng.sendmail_command",
             "ng.auto_reply_to",
             "ng.mail_debuger",
             "ng.debug_exit",
@@ -829,12 +864,29 @@
             "ng.sql_limit",
             "ng.anti_flood",
             "ng.throttler",
+            "ng.incoming",
             "ng.is_html",
             "ng.published",
             "ng.created_by",
+            "uu.name AS created_by_name",
             "ng.date_created",
             "ng.modified_by",
+            "uu_8301.name AS modified_by_name",
             "ng.date_modified"
+        ],
+        "leftjoin": [
+            {
+                "table": "Users\\Users\\Code\\Tables\\Users",
+                "alias": "uu",
+                "name": "#__users_users",
+                "on": "ng.created_by = uu.id"
+            },
+            {
+                "table": "Users\\Users\\Code\\Tables\\Users",
+                "alias": "uu_8301",
+                "name": "#__users_users",
+                "on": "ng.modified_by = uu_8301.id"
+            }
         ]
     }
 }

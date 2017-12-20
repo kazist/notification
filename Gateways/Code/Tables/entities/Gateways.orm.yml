@@ -56,6 +56,11 @@ Notification\Gateways\Code\Tables\Gateways:
       type: string
       length: 255
       nullable: true
+    sendmail_command:
+      name: sendmail_command
+      type: string
+      length: 255
+      nullable: true
     auto_reply_to:
       name: auto_reply_to
       type: string
@@ -90,7 +95,11 @@ Notification\Gateways\Code\Tables\Gateways:
       name: throttler
       type: integer
       length: 11
-      nullable: false
+      nullable: true
+    incoming:
+      name: incoming
+      type: integer
+      length: 11
     is_html:
       name: is_html
       type: integer
@@ -119,6 +128,11 @@ Notification\Gateways\Code\Tables\Gateways:
       name: date_modified
       type: datetime
       nullable: false
+  indexes:
+    created_by_index:
+      columns: [created_by]
+    modified_by_index:
+      columns: [modified_by]
   lifecycleCallbacks:
     prePersist:
       - onPrePersist
