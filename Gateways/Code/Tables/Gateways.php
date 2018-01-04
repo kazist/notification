@@ -32,7 +32,7 @@ class Gateways extends \Kazist\Table\BaseTable
     /**
      * @var string
      *
-     * @ORM\Column(name="type", type="string", length=255, nullable=false)
+     * @ORM\Column(name="type", type="string", length=255, nullable=true)
      */
     protected $type;
 
@@ -151,9 +151,30 @@ class Gateways extends \Kazist\Table\BaseTable
     /**
      * @var integer
      *
-     * @ORM\Column(name="incoming", type="integer", length=11)
+     * @ORM\Column(name="incoming", type="integer", length=11, nullable=true)
      */
     protected $incoming;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="incoming_port", type="string", length=255, nullable=true)
+     */
+    protected $incoming_port;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="incoming_url", type="string", length=255, nullable=true)
+     */
+    protected $incoming_url;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="incoming_sslvalidate", type="integer", length=11, nullable=true)
+     */
+    protected $incoming_sslvalidate;
 
     /**
      * @var integer
@@ -172,28 +193,28 @@ class Gateways extends \Kazist\Table\BaseTable
     /**
      * @var integer
      *
-     * @ORM\Column(name="created_by", type="integer", length=11, nullable=false)
+     * @ORM\Column(name="created_by", type="integer", length=11, nullable=true)
      */
     protected $created_by;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="date_created", type="datetime", nullable=false)
+     * @ORM\Column(name="date_created", type="datetime", nullable=true)
      */
     protected $date_created;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="modified_by", type="integer", length=11, nullable=false)
+     * @ORM\Column(name="modified_by", type="integer", length=11, nullable=true)
      */
     protected $modified_by;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="date_modified", type="datetime", nullable=false)
+     * @ORM\Column(name="date_modified", type="datetime", nullable=true)
      */
     protected $date_modified;
 
@@ -662,6 +683,78 @@ class Gateways extends \Kazist\Table\BaseTable
     public function getIncoming()
     {
         return $this->incoming;
+    }
+
+    /**
+     * Set incomingPort
+     *
+     * @param string $incomingPort
+     *
+     * @return Gateways
+     */
+    public function setIncomingPort($incomingPort)
+    {
+        $this->incoming_port = $incomingPort;
+
+        return $this;
+    }
+
+    /**
+     * Get incomingPort
+     *
+     * @return string
+     */
+    public function getIncomingPort()
+    {
+        return $this->incoming_port;
+    }
+
+    /**
+     * Set incomingUrl
+     *
+     * @param string $incomingUrl
+     *
+     * @return Gateways
+     */
+    public function setIncomingUrl($incomingUrl)
+    {
+        $this->incoming_url = $incomingUrl;
+
+        return $this;
+    }
+
+    /**
+     * Get incomingUrl
+     *
+     * @return string
+     */
+    public function getIncomingUrl()
+    {
+        return $this->incoming_url;
+    }
+
+    /**
+     * Set incomingSslvalidate
+     *
+     * @param integer $incomingSslvalidate
+     *
+     * @return Gateways
+     */
+    public function setIncomingSslvalidate($incomingSslvalidate)
+    {
+        $this->incoming_sslvalidate = $incomingSslvalidate;
+
+        return $this;
+    }
+
+    /**
+     * Get incomingSslvalidate
+     *
+     * @return integer
+     */
+    public function getIncomingSslvalidate()
+    {
+        return $this->incoming_sslvalidate;
     }
 
     /**

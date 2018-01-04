@@ -8,24 +8,17 @@
  */
 
 /**
- * Description of InboxController
+ * Description of AttachmentsController
  *
  * @author sbc
  */
 
-namespace Notification\Inbox\Code\Controllers;
+namespace Notification\Inbox\Attachments\Code\Controllers;
 
 defined('KAZIST') or exit('Not Kazist Framework');
 
-use Notification\Inbox\Code\Classes\FetchMail;
 use Kazist\Controller\BaseController;
 
-class InboxController extends BaseController {
-
-    public function fetchmailAction() {
-
-        $fetchMail = new FetchMail();
-        $fetchMail->fetchMail();
-    }
-
+class AttachmentsController extends BaseController {
+    
 }

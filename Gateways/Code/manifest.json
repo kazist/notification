@@ -3,11 +3,11 @@
     "title": "Email Gateways List",
     "explanation": "Email Gateways List",
     "description": "Email Gateways List",
-    "version": 33,
+    "version": 39,
     "has_view": "1",
     "tie_field": "0",
     "email_on_new": "0",
     "email_on_edit": "0",
     "email_on_delete": "0",
-    "date_file_modified": "2017-12-14 20:09:22"
+    "date_file_modified": "2017-12-28 07:35:55"
 }

@@ -1,32 +1,18 @@
-Notification\Inbox\Code\Tables\Inbox:
-  table: notification_inbox
+Notification\Inbox\Attachments\Code\Tables\Attachments:
+  table: notification_inbox_attachments
   type: entity
   id:
     id:
       type: integer
       generator: { strategy: AUTO }
   fields:
-    subject:
-      name: subject
-      type: string
-      length: 255
-      nullable: true
-    body:
-      name: body
-      type: text
-      nullable: true
-    gateway_id:
-      name: gateway_id
+    inbox_id:
+      name: inbox_id
       type: integer
       length: 11
-      nullable: true
-    email:
-      name: email
-      type: string
-      length: 255
       nullable: false
-    created_by:
-      name: created_by
+    file:
+      name: file
       type: integer
       length: 11
       nullable: true
@@ -34,18 +20,27 @@ Notification\Inbox\Code\Tables\Inbox:
       name: date_created
       type: datetime
       nullable: true
+    date_modified:
+      name: date_modified
+      type: datetime
+      nullable: true
     modified_by:
       name: modified_by
       type: integer
       length: 11
       nullable: true
-    date_modified:
-      name: date_modified
-      type: datetime
+    created_by:
+      name: created_by
+      type: integer
+      length: 11
       nullable: true
   indexes:
-    gateway_id_index:
-      columns: [gateway_id]
+    inbox_id_index:
+      columns: [inbox_id]
+    modified_by_index:
+      columns: [modified_by]
+    created_by_index:
+      columns: [created_by]
   lifecycleCallbacks:
     prePersist:
       - onPrePersist
