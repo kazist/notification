@@ -76,7 +76,19 @@
             "title": "User Emails",
             "alias": "admin_notification_templates_layouts",
             "url": "admin/notification/templates/layouts",
-           "icon": "fa fa-picture-o",
+            "icon": "fa fa-picture-o",
             "children": []
+        }, {
+            "title": "Setup",
+            "alias": "admin_notification_newsletters_scheduled",
+            "url": "",
+            "icon": "fa fa-cogs",
+            "children": [{
+                    "title": "Scheduled Tables ",
+                    "alias": "admin_notification_newsletters_scheduled_tables",
+                    "url": "admin/notification/newsletters/scheduled/tables",
+                    "icon": "fa fa-navicon",
+                    "children": []
+                }]
         }]
 }

@@ -90,5 +90,9 @@
     "NotificationInboxAttachments": {
         "namespace": "Notification\\Inbox\\Attachments",
         "controller": "AttachmentsController"
+    },
+    "NotificationNewslettersScheduledTables": {
+        "namespace": "Notification\\Newsletters\\Scheduled\\Tables",
+        "controller": "TablesController"
     }
 }

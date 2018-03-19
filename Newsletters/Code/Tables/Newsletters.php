@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Newsletters
  *
- * @ORM\Table(name="notification_newsletters", indexes={@ORM\Index(name="template_id_index", columns={"template_id"}), @ORM\Index(name="group_id_index", columns={"group_id"})})
+ * @ORM\Table(name="notification_newsletters", indexes={@ORM\Index(name="template_id_index", columns={"template_id"}), @ORM\Index(name="group_id_index", columns={"group_id"}), @ORM\Index(name="frequency_id_index", columns={"frequency_id"}), @ORM\Index(name="created_by_index", columns={"created_by"}), @ORM\Index(name="modified_by_index", columns={"modified_by"})})
  * @ORM\Entity
  * @ORM\HasLifecycleCallbacks
  */
@@ -51,11 +51,11 @@ class Newsletters extends \Kazist\Table\BaseTable
     protected $group_id;
 
     /**
-     * @var string
+     * @var integer
      *
-     * @ORM\Column(name="how_to_repeat", type="string", length=255, nullable=true)
+     * @ORM\Column(name="frequency_id", type="integer", length=11, nullable=true)
      */
-    protected $how_to_repeat;
+    protected $frequency_id;
 
     /**
      * @var \DateTime
@@ -81,90 +81,6 @@ class Newsletters extends \Kazist\Table\BaseTable
     /**
      * @var integer
      *
-     * @ORM\Column(name="forever", type="integer", length=11, nullable=true)
-     */
-    protected $forever;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="repeated", type="integer", length=11, nullable=true)
-     */
-    protected $repeated;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="repeated_every", type="integer", length=11, nullable=true)
-     */
-    protected $repeated_every;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="repeated_on", type="string", length=255, nullable=true)
-     */
-    protected $repeated_on;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="repeated_minute", type="string", length=255, nullable=true)
-     */
-    protected $repeated_minute;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="repeated_hour", type="string", length=255, nullable=true)
-     */
-    protected $repeated_hour;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="repeated_day_of_month", type="string", length=255, nullable=true)
-     */
-    protected $repeated_day_of_month;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="repeated_month", type="string", length=255, nullable=true)
-     */
-    protected $repeated_month;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="repeated_day_of_week", type="string", length=255, nullable=true)
-     */
-    protected $repeated_day_of_week;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="repeated_year", type="string", length=255, nullable=true)
-     */
-    protected $repeated_year;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="duration", type="integer", length=11, nullable=true)
-     */
-    protected $duration;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="duration_type", type="string", length=255, nullable=true)
-     */
-    protected $duration_type;
-
-    /**
-     * @var integer
-     *
      * @ORM\Column(name="is_sent", type="integer", length=11, nullable=true)
      */
     protected $is_sent;
@@ -172,35 +88,35 @@ class Newsletters extends \Kazist\Table\BaseTable
     /**
      * @var integer
      *
-     * @ORM\Column(name="published", type="integer", length=11, nullable=false)
+     * @ORM\Column(name="published", type="integer", length=11, nullable=true)
      */
     protected $published;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="created_by", type="integer", length=11, nullable=false)
+     * @ORM\Column(name="created_by", type="integer", length=11, nullable=true)
      */
     protected $created_by;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="date_created", type="datetime", nullable=false)
+     * @ORM\Column(name="date_created", type="datetime", nullable=true)
      */
     protected $date_created;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="modified_by", type="integer", length=11, nullable=false)
+     * @ORM\Column(name="modified_by", type="integer", length=11, nullable=true)
      */
     protected $modified_by;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="date_modified", type="datetime", nullable=false)
+     * @ORM\Column(name="date_modified", type="datetime", nullable=true)
      */
     protected $date_modified;
 
@@ -208,7 +124,7 @@ class Newsletters extends \Kazist\Table\BaseTable
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -219,6 +135,7 @@ class Newsletters extends \Kazist\Table\BaseTable
      * Set subject
      *
      * @param string $subject
+     *
      * @return Newsletters
      */
     public function setSubject($subject)
@@ -231,7 +148,7 @@ class Newsletters extends \Kazist\Table\BaseTable
     /**
      * Get subject
      *
-     * @return string 
+     * @return string
      */
     public function getSubject()
     {
@@ -242,6 +159,7 @@ class Newsletters extends \Kazist\Table\BaseTable
      * Set body
      *
      * @param string $body
+     *
      * @return Newsletters
      */
     public function setBody($body)
@@ -254,7 +172,7 @@ class Newsletters extends \Kazist\Table\BaseTable
     /**
      * Get body
      *
-     * @return string 
+     * @return string
      */
     public function getBody()
     {
@@ -262,9 +180,10 @@ class Newsletters extends \Kazist\Table\BaseTable
     }
 
     /**
-     * Set template_id
+     * Set templateId
      *
      * @param integer $templateId
+     *
      * @return Newsletters
      */
     public function setTemplateId($templateId)
@@ -275,9 +194,9 @@ class Newsletters extends \Kazist\Table\BaseTable
     }
 
     /**
-     * Get template_id
+     * Get templateId
      *
-     * @return integer 
+     * @return integer
      */
     public function getTemplateId()
     {
@@ -285,9 +204,10 @@ class Newsletters extends \Kazist\Table\BaseTable
     }
 
     /**
-     * Set group_id
+     * Set groupId
      *
      * @param integer $groupId
+     *
      * @return Newsletters
      */
     public function setGroupId($groupId)
@@ -298,9 +218,9 @@ class Newsletters extends \Kazist\Table\BaseTable
     }
 
     /**
-     * Get group_id
+     * Get groupId
      *
-     * @return integer 
+     * @return integer
      */
     public function getGroupId()
     {
@@ -308,32 +228,34 @@ class Newsletters extends \Kazist\Table\BaseTable
     }
 
     /**
-     * Set how_to_repeat
+     * Set frequencyId
      *
-     * @param string $howToRepeat
+     * @param integer $frequencyId
+     *
      * @return Newsletters
      */
-    public function setHowToRepeat($howToRepeat)
+    public function setFrequencyId($frequencyId)
     {
-        $this->how_to_repeat = $howToRepeat;
+        $this->frequency_id = $frequencyId;
 
         return $this;
     }
 
     /**
-     * Get how_to_repeat
+     * Get frequencyId
      *
-     * @return string 
+     * @return integer
      */
-    public function getHowToRepeat()
+    public function getFrequencyId()
     {
-        return $this->how_to_repeat;
+        return $this->frequency_id;
     }
 
     /**
-     * Set send_date
+     * Set sendDate
      *
      * @param \DateTime $sendDate
+     *
      * @return Newsletters
      */
     public function setSendDate($sendDate)
@@ -344,9 +266,9 @@ class Newsletters extends \Kazist\Table\BaseTable
     }
 
     /**
-     * Get send_date
+     * Get sendDate
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getSendDate()
     {
@@ -354,9 +276,10 @@ class Newsletters extends \Kazist\Table\BaseTable
     }
 
     /**
-     * Set start_date
+     * Set startDate
      *
      * @param \DateTime $startDate
+     *
      * @return Newsletters
      */
     public function setStartDate($startDate)
@@ -367,9 +290,9 @@ class Newsletters extends \Kazist\Table\BaseTable
     }
 
     /**
-     * Get start_date
+     * Get startDate
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getStartDate()
     {
@@ -377,9 +300,10 @@ class Newsletters extends \Kazist\Table\BaseTable
     }
 
     /**
-     * Set end_date
+     * Set endDate
      *
      * @param \DateTime $endDate
+     *
      * @return Newsletters
      */
     public function setEndDate($endDate)
@@ -390,9 +314,9 @@ class Newsletters extends \Kazist\Table\BaseTable
     }
 
     /**
-     * Get end_date
+     * Get endDate
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getEndDate()
     {
@@ -400,285 +324,10 @@ class Newsletters extends \Kazist\Table\BaseTable
     }
 
     /**
-     * Set forever
-     *
-     * @param integer $forever
-     * @return Newsletters
-     */
-    public function setForever($forever)
-    {
-        $this->forever = $forever;
-
-        return $this;
-    }
-
-    /**
-     * Get forever
-     *
-     * @return integer 
-     */
-    public function getForever()
-    {
-        return $this->forever;
-    }
-
-    /**
-     * Set repeated
-     *
-     * @param integer $repeated
-     * @return Newsletters
-     */
-    public function setRepeated($repeated)
-    {
-        $this->repeated = $repeated;
-
-        return $this;
-    }
-
-    /**
-     * Get repeated
-     *
-     * @return integer 
-     */
-    public function getRepeated()
-    {
-        return $this->repeated;
-    }
-
-    /**
-     * Set repeated_every
-     *
-     * @param integer $repeatedEvery
-     * @return Newsletters
-     */
-    public function setRepeatedEvery($repeatedEvery)
-    {
-        $this->repeated_every = $repeatedEvery;
-
-        return $this;
-    }
-
-    /**
-     * Get repeated_every
-     *
-     * @return integer 
-     */
-    public function getRepeatedEvery()
-    {
-        return $this->repeated_every;
-    }
-
-    /**
-     * Set repeated_on
-     *
-     * @param string $repeatedOn
-     * @return Newsletters
-     */
-    public function setRepeatedOn($repeatedOn)
-    {
-        $this->repeated_on = $repeatedOn;
-
-        return $this;
-    }
-
-    /**
-     * Get repeated_on
-     *
-     * @return string 
-     */
-    public function getRepeatedOn()
-    {
-        return $this->repeated_on;
-    }
-
-    /**
-     * Set repeated_minute
-     *
-     * @param string $repeatedMinute
-     * @return Newsletters
-     */
-    public function setRepeatedMinute($repeatedMinute)
-    {
-        $this->repeated_minute = $repeatedMinute;
-
-        return $this;
-    }
-
-    /**
-     * Get repeated_minute
-     *
-     * @return string 
-     */
-    public function getRepeatedMinute()
-    {
-        return $this->repeated_minute;
-    }
-
-    /**
-     * Set repeated_hour
-     *
-     * @param string $repeatedHour
-     * @return Newsletters
-     */
-    public function setRepeatedHour($repeatedHour)
-    {
-        $this->repeated_hour = $repeatedHour;
-
-        return $this;
-    }
-
-    /**
-     * Get repeated_hour
-     *
-     * @return string 
-     */
-    public function getRepeatedHour()
-    {
-        return $this->repeated_hour;
-    }
-
-    /**
-     * Set repeated_day_of_month
-     *
-     * @param string $repeatedDayOfMonth
-     * @return Newsletters
-     */
-    public function setRepeatedDayOfMonth($repeatedDayOfMonth)
-    {
-        $this->repeated_day_of_month = $repeatedDayOfMonth;
-
-        return $this;
-    }
-
-    /**
-     * Get repeated_day_of_month
-     *
-     * @return string 
-     */
-    public function getRepeatedDayOfMonth()
-    {
-        return $this->repeated_day_of_month;
-    }
-
-    /**
-     * Set repeated_month
-     *
-     * @param string $repeatedMonth
-     * @return Newsletters
-     */
-    public function setRepeatedMonth($repeatedMonth)
-    {
-        $this->repeated_month = $repeatedMonth;
-
-        return $this;
-    }
-
-    /**
-     * Get repeated_month
-     *
-     * @return string 
-     */
-    public function getRepeatedMonth()
-    {
-        return $this->repeated_month;
-    }
-
-    /**
-     * Set repeated_day_of_week
-     *
-     * @param string $repeatedDayOfWeek
-     * @return Newsletters
-     */
-    public function setRepeatedDayOfWeek($repeatedDayOfWeek)
-    {
-        $this->repeated_day_of_week = $repeatedDayOfWeek;
-
-        return $this;
-    }
-
-    /**
-     * Get repeated_day_of_week
-     *
-     * @return string 
-     */
-    public function getRepeatedDayOfWeek()
-    {
-        return $this->repeated_day_of_week;
-    }
-
-    /**
-     * Set repeated_year
-     *
-     * @param string $repeatedYear
-     * @return Newsletters
-     */
-    public function setRepeatedYear($repeatedYear)
-    {
-        $this->repeated_year = $repeatedYear;
-
-        return $this;
-    }
-
-    /**
-     * Get repeated_year
-     *
-     * @return string 
-     */
-    public function getRepeatedYear()
-    {
-        return $this->repeated_year;
-    }
-
-    /**
-     * Set duration
-     *
-     * @param integer $duration
-     * @return Newsletters
-     */
-    public function setDuration($duration)
-    {
-        $this->duration = $duration;
-
-        return $this;
-    }
-
-    /**
-     * Get duration
-     *
-     * @return integer 
-     */
-    public function getDuration()
-    {
-        return $this->duration;
-    }
-
-    /**
-     * Set duration_type
-     *
-     * @param string $durationType
-     * @return Newsletters
-     */
-    public function setDurationType($durationType)
-    {
-        $this->duration_type = $durationType;
-
-        return $this;
-    }
-
-    /**
-     * Get duration_type
-     *
-     * @return string 
-     */
-    public function getDurationType()
-    {
-        return $this->duration_type;
-    }
-
-    /**
-     * Set is_sent
+     * Set isSent
      *
      * @param integer $isSent
+     *
      * @return Newsletters
      */
     public function setIsSent($isSent)
@@ -689,9 +338,9 @@ class Newsletters extends \Kazist\Table\BaseTable
     }
 
     /**
-     * Get is_sent
+     * Get isSent
      *
-     * @return integer 
+     * @return integer
      */
     public function getIsSent()
     {
@@ -702,6 +351,7 @@ class Newsletters extends \Kazist\Table\BaseTable
      * Set published
      *
      * @param integer $published
+     *
      * @return Newsletters
      */
     public function setPublished($published)
@@ -714,7 +364,7 @@ class Newsletters extends \Kazist\Table\BaseTable
     /**
      * Get published
      *
-     * @return integer 
+     * @return integer
      */
     public function getPublished()
     {
@@ -722,9 +372,9 @@ class Newsletters extends \Kazist\Table\BaseTable
     }
 
     /**
-     * Get created_by
+     * Get createdBy
      *
-     * @return integer 
+     * @return integer
      */
     public function getCreatedBy()
     {
@@ -732,9 +382,9 @@ class Newsletters extends \Kazist\Table\BaseTable
     }
 
     /**
-     * Get date_created
+     * Get dateCreated
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDateCreated()
     {
@@ -742,9 +392,9 @@ class Newsletters extends \Kazist\Table\BaseTable
     }
 
     /**
-     * Get modified_by
+     * Get modifiedBy
      *
-     * @return integer 
+     * @return integer
      */
     public function getModifiedBy()
     {
@@ -752,9 +402,9 @@ class Newsletters extends \Kazist\Table\BaseTable
     }
 
     /**
-     * Get date_modified
+     * Get dateModified
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDateModified()
     {
@@ -768,3 +418,4 @@ class Newsletters extends \Kazist\Table\BaseTable
         // Add your code here
     }
 }
+

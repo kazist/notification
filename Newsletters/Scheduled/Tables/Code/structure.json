@@ -11,14 +11,18 @@
                                 "items": [
                                     {
                                         "group": {
-                                            "name": "scheduled Detail",
-                                            "unique_name": "scheduled_detail",
+                                            "name": "Tables Detail",
+                                            "unique_name": "tables_detail",
                                             "has_title": 1,
                                             "user_right": 0,
                                             "hide_on_new": 0,
                                             "fields": [
-                                                "subject",
-                                                "body"
+                                                "title",
+                                                "extension_path",
+                                                "user_field",
+                                                "email_field",
+                                                "date_field",
+                                                "published"
                                             ]
                                         }
                                     }
@@ -30,43 +34,16 @@
                                 "items": [
                                     {
                                         "group": {
-                                            "name": "Target Table",
-                                            "unique_name": "target_table",
-                                            "has_title": 1,
-                                            "user_right": 0,
-                                            "hide_on_new": 0,
-                                            "fields": [
-                                                "selection_list"
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "group": {
-                                            "name": "How to Send",
-                                            "unique_name": "how_to_send",
-                                            "has_title": 1,
-                                            "user_right": 0,
-                                            "hide_on_new": 0,
-                                            "fields": [
-                                                "published",
-                                                "wait_period",
-                                                "start_date",
-                                                "end_date"
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "group": {
-                                            "name": "Modification Detail",
+                                            "name": "Modification detail",
                                             "unique_name": "modification_detail",
                                             "has_title": 1,
-                                            "user_right": 1,
-                                            "hide_on_new": 1,
+                                            "user_right": 0,
+                                            "hide_on_new": 0,
                                             "fields": [
-                                                "date_modified",
                                                 "modified_by",
-                                                "date_created",
-                                                "created_by"
+                                                "date_modified",
+                                                "created_by",
+                                                "date_created"
                                             ]
                                         }
                                     }
@@ -77,31 +54,31 @@
                 ]
             },
             "ommitted": [
-                "id",
-                "unique_name"
+                "id"
             ]
         },
         "table": {
             "fields": [
-                "subject",
-                "wait_period",
-                "selection_list",
-                "start_date",
-                "end_date",
+                "title",
+                "extension_path",
+                "email_field",
+                "date_field",
+                "user_field",
                 "published"
             ],
             "has_label": [
-                "subject",
-                "wait_period",
+                "title",
+                "extension_path",
+                "email_field",
+                "date_field",
+                "user_field",
                 "published"
             ]
         }
     },
     "rights": {
         "tab": [],
-        "group": [
-            "modification_detail"
-        ],
+        "group": [],
         "field": []
     },
     "customhtmls": [],
@@ -112,7 +89,7 @@
             "name": "id",
             "html_type": "text",
             "mysql_type": "int",
-            "view_side": "both",
+            "view_side": "",
             "index": "",
             "id_name": "",
             "class_name": "",
@@ -124,6 +101,7 @@
                 "general": [],
                 "source": [],
                 "save": {
+                    "view_side": "both",
                     "index": ""
                 },
                 "media": [],
@@ -132,8 +110,33 @@
         },
         {
             "dropdown_filter": "0",
+            "nullable": "0",
+            "name": "title",
+            "html_type": "text",
+            "mysql_type": "varchar",
+            "view_side": "",
+            "index": "",
+            "id_name": "",
+            "class_name": "",
+            "default_value": "",
+            "size": "",
+            "readonly": "",
+            "format_value": "",
+            "parameters": {
+                "general": [],
+                "source": [],
+                "save": {
+                    "view_side": "both",
+                    "index": ""
+                },
+                "media": [],
+                "payment": []
+            }
+        },
+        {
+            "dropdown_filter": "1",
             "nullable": "1",
-            "name": "unique_name",
+            "name": "extension_path",
             "html_type": "text",
             "mysql_type": "varchar",
             "view_side": "",
@@ -156,88 +159,12 @@
             }
         },
         {
-            "dropdown_filter": "1",
-            "nullable": "0",
-            "name": "subject",
-            "html_type": "text",
-            "mysql_type": "varchar",
-            "view_side": "both",
-            "index": "",
-            "id_name": "",
-            "class_name": "",
-            "default_value": "",
-            "size": "",
-            "readonly": "",
-            "format_value": "",
-            "parameters": {
-                "general": [],
-                "source": [],
-                "save": {
-                    "index": ""
-                },
-                "media": [],
-                "payment": []
-            }
-        },
-        {
-            "dropdown_filter": "0",
-            "nullable": "0",
-            "name": "body",
-            "html_type": "editor",
-            "mysql_type": "varchar",
-            "view_side": "both",
-            "index": "",
-            "id_name": "",
-            "class_name": "",
-            "default_value": "",
-            "size": "",
-            "readonly": "",
-            "format_value": "",
-            "parameters": {
-                "general": {
-                    "col": "",
-                    "row": "",
-                    "editor_type": "advanced"
-                },
-                "source": [],
-                "save": {
-                    "index": ""
-                },
-                "media": [],
-                "payment": []
-            }
-        },
-        {
-            "dropdown_filter": "1",
-            "nullable": "1",
-            "name": "wait_period",
-            "html_type": "text",
-            "mysql_type": "int",
-            "view_side": "both",
-            "index": "",
-            "id_name": "",
-            "class_name": "",
-            "default_value": "",
-            "size": "",
-            "readonly": "0",
-            "format_value": "",
-            "parameters": {
-                "general": [],
-                "source": [],
-                "save": {
-                    "index": ""
-                },
-                "media": [],
-                "payment": []
-            }
-        },
-        {
             "dropdown_filter": "0",
             "nullable": "1",
-            "name": "selection_list",
+            "name": "email_field",
             "html_type": "select",
-            "mysql_type": "int",
-            "view_side": "",
+            "mysql_type": "varchar",
+            "view_side": "both",
             "index": "",
             "id_name": "",
             "class_name": "",
@@ -248,15 +175,10 @@
             "parameters": {
                 "general": [],
                 "source": {
-                    "data_source": "db_table",
-                    "join_field": "id",
-                    "display_field": [
-                        "title"
-                    ],
-                    "join_table_name": "notification_newsletters_scheduled_tables"
+                    "customs": [],
+                    "data_source": "custom"
                 },
                 "save": {
-                    "view_side": "both",
                     "index": ""
                 },
                 "media": [],
@@ -266,22 +188,24 @@
         {
             "dropdown_filter": "0",
             "nullable": "1",
-            "name": "start_date",
-            "html_type": "datetime",
-            "mysql_type": "datetime",
-            "view_side": "",
+            "name": "date_field",
+            "html_type": "select",
+            "mysql_type": "varchar",
+            "view_side": "both",
             "index": "",
             "id_name": "",
             "class_name": "",
-            "default_value": "",
+            "default_value": "date_created",
             "size": "",
             "readonly": "0",
             "format_value": "",
             "parameters": {
                 "general": [],
-                "source": [],
+                "source": {
+                    "customs": [],
+                    "data_source": "custom"
+                },
                 "save": {
-                    "view_side": "both",
                     "index": ""
                 },
                 "media": [],
@@ -291,22 +215,24 @@
         {
             "dropdown_filter": "0",
             "nullable": "1",
-            "name": "end_date",
-            "html_type": "datetime",
-            "mysql_type": "datetime",
-            "view_side": "",
+            "name": "user_field",
+            "html_type": "select",
+            "mysql_type": "varchar",
+            "view_side": "both",
             "index": "",
             "id_name": "",
             "class_name": "",
-            "default_value": "",
+            "default_value": "created_by",
             "size": "",
             "readonly": "0",
             "format_value": "",
             "parameters": {
                 "general": [],
-                "source": [],
+                "source": {
+                    "customs": [],
+                    "data_source": "custom"
+                },
                 "save": {
-                    "view_side": "both",
                     "index": ""
                 },
                 "media": [],
@@ -314,12 +240,12 @@
             }
         },
         {
-            "dropdown_filter": "1",
+            "dropdown_filter": "0",
             "nullable": "1",
             "name": "published",
             "html_type": "yesno",
             "mysql_type": "int",
-            "view_side": "both",
+            "view_side": "",
             "index": "",
             "id_name": "",
             "class_name": "",
@@ -331,37 +257,7 @@
                 "general": [],
                 "source": [],
                 "save": {
-                    "index": ""
-                },
-                "media": [],
-                "payment": []
-            }
-        },
-        {
-            "dropdown_filter": "0",
-            "nullable": "1",
-            "name": "created_by",
-            "html_type": "recordpicker",
-            "mysql_type": "int",
-            "view_side": "both",
-            "index": "",
-            "id_name": "",
-            "class_name": "",
-            "default_value": "",
-            "size": "",
-            "readonly": "",
-            "format_value": "",
-            "parameters": {
-                "general": [],
-                "source": {
-                    "data_source": "db_table",
-                    "join_field": "id",
-                    "display_field": [
-                        "name"
-                    ],
-                    "join_table_name": "users_users"
-                },
-                "save": {
+                    "view_side": "both",
                     "index": ""
                 },
                 "media": [],
@@ -374,7 +270,7 @@
             "name": "date_created",
             "html_type": "datetime",
             "mysql_type": "datetime",
-            "view_side": "both",
+            "view_side": "",
             "index": "",
             "id_name": "",
             "class_name": "",
@@ -386,6 +282,32 @@
                 "general": [],
                 "source": [],
                 "save": {
+                    "view_side": "both",
+                    "index": ""
+                },
+                "media": [],
+                "payment": []
+            }
+        },
+        {
+            "dropdown_filter": "0",
+            "nullable": "1",
+            "name": "date_modified",
+            "html_type": "datetime",
+            "mysql_type": "datetime",
+            "view_side": "",
+            "index": "",
+            "id_name": "",
+            "class_name": "",
+            "default_value": "",
+            "size": "",
+            "readonly": "",
+            "format_value": "",
+            "parameters": {
+                "general": [],
+                "source": [],
+                "save": {
+                    "view_side": "both",
                     "index": ""
                 },
                 "media": [],
@@ -398,7 +320,7 @@
             "name": "modified_by",
             "html_type": "recordpicker",
             "mysql_type": "int",
-            "view_side": "both",
+            "view_side": "",
             "index": "",
             "id_name": "",
             "class_name": "",
@@ -417,6 +339,7 @@
                     "join_table_name": "users_users"
                 },
                 "save": {
+                    "view_side": "both",
                     "index": ""
                 },
                 "media": [],
@@ -426,10 +349,10 @@
         {
             "dropdown_filter": "0",
             "nullable": "1",
-            "name": "date_modified",
-            "html_type": "datetime",
-            "mysql_type": "datetime",
-            "view_side": "both",
+            "name": "created_by",
+            "html_type": "recordpicker",
+            "mysql_type": "int",
+            "view_side": "",
             "index": "",
             "id_name": "",
             "class_name": "",
@@ -439,8 +362,16 @@
             "format_value": "",
             "parameters": {
                 "general": [],
-                "source": [],
+                "source": {
+                    "data_source": "db_table",
+                    "join_field": "id",
+                    "display_field": [
+                        "name"
+                    ],
+                    "join_table_name": "users_users"
+                },
                 "save": {
+                    "view_side": "both",
                     "index": ""
                 },
                 "media": [],
@@ -449,12 +380,12 @@
         }
     ],
     "primarykey": "id",
-    "table_name": "notification_newsletters_scheduled",
-    "table_alias": "nns",
+    "table_name": "notification_newsletters_scheduled_tables",
+    "table_alias": "nnst",
     "foreignkey": "",
     "renamedfields": "",
     "main_fields": [
-        "subject"
+        "title"
     ],
     "main_view": "table",
     "has_view": "1",
@@ -462,50 +393,41 @@
     "email_on_new": "0",
     "email_on_edit": "0",
     "email_on_delete": "0",
-    "subset_name": "scheduled",
+    "subset_name": "tables",
     "right_field": "",
     "query": {
         "from": {
-            "table": "Notification\\Newsletters\\Scheduled\\Code\\Tables\\Scheduled",
-            "alias": "nns",
-            "name": "#__notification_newsletters_scheduled"
+            "table": "Notification\\Newsletters\\Scheduled\\Tables\\Code\\Tables\\Tables",
+            "alias": "nnst",
+            "name": "#__notification_newsletters_scheduled_tables"
         },
         "select": [
-            "nns.id",
-            "nns.unique_name",
-            "nns.subject",
-            "nns.body",
-            "nns.wait_period",
-            "nns.selection_list",
-            "nnst.title AS selection_list_title",
-            "nns.start_date",
-            "nns.end_date",
-            "nns.published",
-            "nns.created_by",
-            "uu.name AS created_by_name",
-            "nns.date_created",
-            "nns.modified_by",
-            "uu_6892.name AS modified_by_name",
-            "nns.date_modified"
+            "nnst.id",
+            "nnst.title",
+            "nnst.extension_path",
+            "nnst.email_field",
+            "nnst.date_field",
+            "nnst.user_field",
+            "nnst.published",
+            "nnst.date_created",
+            "nnst.date_modified",
+            "nnst.modified_by",
+            "uu.name AS modified_by_name",
+            "nnst.created_by",
+            "uu_6656.name AS created_by_name"
         ],
         "leftjoin": [
-            {
-                "table": "Notification\\Newsletters\\Scheduled\\Tables\\Code\\Tables\\Tables",
-                "alias": "nnst",
-                "name": "#__notification_newsletters_scheduled_tables",
-                "on": "nns.selection_list = nnst.id"
-            },
             {
                 "table": "Users\\Users\\Code\\Tables\\Users",
                 "alias": "uu",
                 "name": "#__users_users",
-                "on": "nns.created_by = uu.id"
+                "on": "nnst.modified_by = uu.id"
             },
             {
                 "table": "Users\\Users\\Code\\Tables\\Users",
-                "alias": "uu_6892",
+                "alias": "uu_6656",
                 "name": "#__users_users",
-                "on": "nns.modified_by = uu_6892.id"
+                "on": "nnst.created_by = uu_6656.id"
             }
         ]
     }

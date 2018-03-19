@@ -7,7 +7,7 @@
                         "columns": [
                             {
                                 "name": "",
-                                "class_name": "col-sm-6",
+                                "class_name": "col-sm-8",
                                 "items": [
                                     {
                                         "group": {
@@ -17,10 +17,28 @@
                                             "user_right": null,
                                             "hide_on_new": null,
                                             "fields": [
-                                                "template_id",
                                                 "subject",
-                                                "send_date",
-                                                "published"
+                                                "body"
+                                            ]
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "",
+                                "class_name": "col-sm-4",
+                                "items": [
+                                    {
+                                        "group": {
+                                            "name": "Publishing Details",
+                                            "unique_name": "publishing_details",
+                                            "has_title": 1,
+                                            "user_right": 0,
+                                            "hide_on_new": 0,
+                                            "fields": [
+                                                "published",
+                                                "template_id",
+                                                "send_date"
                                             ]
                                         }
                                     },
@@ -36,13 +54,7 @@
                                                 "is_sent"
                                             ]
                                         }
-                                    }
-                                ]
-                            },
-                            {
-                                "name": "",
-                                "class_name": "col-sm-6",
-                                "items": [
+                                    },
                                     {
                                         "tab": [
                                             {
@@ -58,26 +70,15 @@
                                                             "items": [
                                                                 {
                                                                     "group": {
-                                                                        "name": "Repeating Setting",
-                                                                        "unique_name": "repeating_setting",
-                                                                        "has_title": null,
-                                                                        "user_right": null,
-                                                                        "hide_on_new": null,
+                                                                        "name": "Repeat Detail",
+                                                                        "unique_name": "repeat_detail",
+                                                                        "has_title": 1,
+                                                                        "user_right": 0,
+                                                                        "hide_on_new": 0,
                                                                         "fields": [
+                                                                            "frequency_id",
                                                                             "start_date",
-                                                                            "how_to_repeat",
-                                                                            "repeated_every",
-                                                                            "repeated_on",
-                                                                            "forever",
-                                                                            "end_date",
-                                                                            "summary",
-                                                                            "repeated",
-                                                                            "repeated_minute",
-                                                                            "repeated_hour",
-                                                                            "repeated_day_of_month",
-                                                                            "repeated_month",
-                                                                            "repeated_day_of_week",
-                                                                            "repeated_year"
+                                                                            "end_date"
                                                                         ]
                                                                     }
                                                                 }
@@ -89,7 +90,7 @@
                                             {
                                                 "name": "Modification Details",
                                                 "unique_name": "modification_details",
-                                                "user_right": null,
+                                                "user_right": 1,
                                                 "hide_on_new": 1,
                                                 "tabcontent": {
                                                     "columns": [
@@ -128,29 +129,14 @@
                             {
                                 "name": "",
                                 "class_name": "col-sm-12",
-                                "items": [
-                                    {
-                                        "group": {
-                                            "name": "Body",
-                                            "unique_name": "body",
-                                            "has_title": null,
-                                            "user_right": null,
-                                            "hide_on_new": null,
-                                            "fields": [
-                                                "body"
-                                            ]
-                                        }
-                                    }
-                                ]
+                                "items": []
                             }
                         ]
                     }
                 ]
             },
             "ommitted": [
-                "id",
-                "duration",
-                "duration_type"
+                "id"
             ]
         },
         "table": {
@@ -158,7 +144,6 @@
                 "subject",
                 "template_id",
                 "group_id",
-                "how_to_repeat",
                 "send_date",
                 "is_sent",
                 "published"
@@ -167,14 +152,16 @@
                 "subject",
                 "template_id",
                 "group_id",
-                "how_to_repeat",
                 "send_date",
-                "is_sent"
+                "is_sent",
+                "published"
             ]
         }
     },
     "rights": {
-        "tab": [],
+        "tab": [
+            "modification_details"
+        ],
         "group": [],
         "field": []
     },
@@ -182,7 +169,7 @@
     "fields": [
         {
             "dropdown_filter": "0",
-            "nullable": "0",
+            "nullable": "1",
             "name": "id",
             "html_type": "text",
             "mysql_type": "int",
@@ -323,23 +310,31 @@
             }
         },
         {
-            "dropdown_filter": "1",
+            "dropdown_filter": "0",
             "nullable": "1",
-            "name": "how_to_repeat",
-            "html_type": "text",
-            "mysql_type": "varchar",
-            "view_side": "both",
+            "name": "frequency_id",
+            "html_type": "select",
+            "mysql_type": "int",
+            "view_side": "",
             "index": "",
             "id_name": "",
             "class_name": "",
             "default_value": "",
             "size": "",
-            "readonly": "",
+            "readonly": "0",
             "format_value": "",
             "parameters": {
                 "general": [],
-                "source": [],
+                "source": {
+                    "data_source": "db_table",
+                    "join_field": "id",
+                    "display_field": [
+                        "title"
+                    ],
+                    "join_table_name": "notification_newsletters_frequencies"
+                },
                 "save": {
+                    "view_side": "both",
                     "index": ""
                 },
                 "media": [],
@@ -419,319 +414,6 @@
             }
         },
         {
-            "dropdown_filter": "0",
-            "nullable": "1",
-            "name": "forever",
-            "html_type": "yesno",
-            "mysql_type": "int",
-            "view_side": "both",
-            "index": "",
-            "id_name": "",
-            "class_name": "",
-            "default_value": "",
-            "size": "",
-            "readonly": "0",
-            "format_value": "",
-            "parameters": {
-                "general": [],
-                "source": [],
-                "save": {
-                    "index": ""
-                },
-                "media": [],
-                "payment": []
-            }
-        },
-        {
-            "dropdown_filter": "0",
-            "nullable": "1",
-            "name": "repeated",
-            "html_type": "yesno",
-            "mysql_type": "int",
-            "view_side": "both",
-            "index": "",
-            "id_name": "",
-            "class_name": "",
-            "default_value": "no",
-            "size": "",
-            "readonly": "0",
-            "format_value": "",
-            "parameters": {
-                "general": [],
-                "source": [],
-                "save": {
-                    "index": ""
-                },
-                "media": [],
-                "payment": []
-            }
-        },
-        {
-            "dropdown_filter": "0",
-            "nullable": "1",
-            "name": "repeated_every",
-            "html_type": "text",
-            "mysql_type": "int",
-            "view_side": "both",
-            "index": "",
-            "id_name": "",
-            "class_name": "",
-            "default_value": "",
-            "size": "",
-            "readonly": "0",
-            "format_value": "",
-            "parameters": {
-                "general": [],
-                "source": [],
-                "save": {
-                    "index": ""
-                },
-                "media": [],
-                "payment": []
-            }
-        },
-        {
-            "dropdown_filter": "0",
-            "nullable": "1",
-            "name": "repeated_on",
-            "html_type": "text",
-            "mysql_type": "varchar",
-            "view_side": "both",
-            "index": "",
-            "id_name": "",
-            "class_name": "",
-            "default_value": "",
-            "size": "",
-            "readonly": "0",
-            "format_value": "",
-            "parameters": {
-                "general": [],
-                "source": [],
-                "save": {
-                    "saving_type": "json",
-                    "index": ""
-                },
-                "media": [],
-                "payment": []
-            }
-        },
-        {
-            "dropdown_filter": "0",
-            "nullable": "1",
-            "name": "repeated_minute",
-            "html_type": "hidden",
-            "mysql_type": "varchar",
-            "view_side": "both",
-            "index": "",
-            "id_name": "",
-            "class_name": "",
-            "default_value": "",
-            "size": "",
-            "readonly": "0",
-            "format_value": "",
-            "parameters": {
-                "general": [],
-                "source": [],
-                "save": {
-                    "index": ""
-                },
-                "media": [],
-                "payment": []
-            }
-        },
-        {
-            "dropdown_filter": "0",
-            "nullable": "1",
-            "name": "repeated_hour",
-            "html_type": "hidden",
-            "mysql_type": "varchar",
-            "view_side": "both",
-            "index": "",
-            "id_name": "",
-            "class_name": "",
-            "default_value": "",
-            "size": "",
-            "readonly": "0",
-            "format_value": "",
-            "parameters": {
-                "general": [],
-                "source": [],
-                "save": {
-                    "index": ""
-                },
-                "media": [],
-                "payment": []
-            }
-        },
-        {
-            "dropdown_filter": "0",
-            "nullable": "1",
-            "name": "repeated_day_of_month",
-            "html_type": "hidden",
-            "mysql_type": "varchar",
-            "view_side": "both",
-            "index": "",
-            "id_name": "",
-            "class_name": "",
-            "default_value": "",
-            "size": "",
-            "readonly": "0",
-            "format_value": "",
-            "parameters": {
-                "general": [],
-                "source": [],
-                "save": {
-                    "index": ""
-                },
-                "media": [],
-                "payment": []
-            }
-        },
-        {
-            "dropdown_filter": "0",
-            "nullable": "1",
-            "name": "repeated_month",
-            "html_type": "hidden",
-            "mysql_type": "varchar",
-            "view_side": "both",
-            "index": "",
-            "id_name": "",
-            "class_name": "",
-            "default_value": "",
-            "size": "",
-            "readonly": "0",
-            "format_value": "",
-            "parameters": {
-                "general": [],
-                "source": [],
-                "save": {
-                    "index": ""
-                },
-                "media": [],
-                "payment": []
-            }
-        },
-        {
-            "dropdown_filter": "0",
-            "nullable": "1",
-            "name": "repeated_day_of_week",
-            "html_type": "hidden",
-            "mysql_type": "varchar",
-            "view_side": "both",
-            "index": "",
-            "id_name": "",
-            "class_name": "",
-            "default_value": "",
-            "size": "",
-            "readonly": "0",
-            "format_value": "",
-            "parameters": {
-                "general": [],
-                "source": [],
-                "save": {
-                    "index": ""
-                },
-                "media": [],
-                "payment": []
-            }
-        },
-        {
-            "dropdown_filter": "0",
-            "nullable": "1",
-            "name": "repeated_year",
-            "html_type": "hidden",
-            "mysql_type": "varchar",
-            "view_side": "both",
-            "index": "",
-            "id_name": "",
-            "class_name": "",
-            "default_value": "",
-            "size": "",
-            "readonly": "0",
-            "format_value": "",
-            "parameters": {
-                "general": [],
-                "source": [],
-                "save": {
-                    "index": ""
-                },
-                "media": [],
-                "payment": []
-            }
-        },
-        {
-            "dropdown_filter": "0",
-            "nullable": "1",
-            "name": "duration",
-            "html_type": "text",
-            "mysql_type": "int",
-            "view_side": "both",
-            "index": "",
-            "id_name": "",
-            "class_name": "",
-            "default_value": "",
-            "size": "",
-            "readonly": "0",
-            "format_value": "",
-            "parameters": {
-                "general": [],
-                "source": [],
-                "save": {
-                    "index": ""
-                },
-                "media": [],
-                "payment": []
-            }
-        },
-        {
-            "dropdown_filter": "0",
-            "nullable": "1",
-            "name": "duration_type",
-            "html_type": "radio",
-            "mysql_type": "varchar",
-            "view_side": "both",
-            "index": "",
-            "id_name": "",
-            "class_name": "",
-            "default_value": "minute",
-            "size": "",
-            "readonly": "0",
-            "format_value": "",
-            "parameters": {
-                "general": [],
-                "source": {
-                    "customs": [
-                        {
-                            "value": "minute",
-                            "text": "Minute"
-                        },
-                        {
-                            "value": "hour",
-                            "text": "Hour"
-                        },
-                        {
-                            "value": "day",
-                            "text": "Day"
-                        },
-                        {
-                            "value": "week",
-                            "text": "week"
-                        },
-                        {
-                            "value": "month",
-                            "text": "Month"
-                        }
-                    ],
-                    "data_source": "custom"
-                },
-                "save": {
-                    "index": ""
-                },
-                "media": [],
-                "payment": []
-            }
-        },
-        {
             "dropdown_filter": "1",
             "nullable": "1",
             "name": "is_sent",
@@ -757,7 +439,7 @@
         },
         {
             "dropdown_filter": "0",
-            "nullable": "0",
+            "nullable": "1",
             "name": "published",
             "html_type": "yesno",
             "mysql_type": "int",
@@ -782,7 +464,7 @@
         },
         {
             "dropdown_filter": "0",
-            "nullable": "0",
+            "nullable": "1",
             "name": "created_by",
             "html_type": "recordpicker",
             "mysql_type": "int",
@@ -813,7 +495,7 @@
         },
         {
             "dropdown_filter": "0",
-            "nullable": "0",
+            "nullable": "1",
             "name": "date_created",
             "html_type": "datetime",
             "mysql_type": "datetime",
@@ -837,7 +519,7 @@
         },
         {
             "dropdown_filter": "0",
-            "nullable": "0",
+            "nullable": "1",
             "name": "modified_by",
             "html_type": "recordpicker",
             "mysql_type": "int",
@@ -868,7 +550,7 @@
         },
         {
             "dropdown_filter": "0",
-            "nullable": "0",
+            "nullable": "1",
             "name": "date_modified",
             "html_type": "datetime",
             "mysql_type": "datetime",
@@ -921,27 +603,18 @@
             "nt.name AS template_id_name",
             "nn.group_id",
             "ng.name AS group_id_name",
-            "nn.how_to_repeat",
+            "nn.frequency_id",
+            "nnf.title AS frequency_id_title",
             "nn.send_date",
             "nn.start_date",
             "nn.end_date",
-            "nn.forever",
-            "nn.repeated",
-            "nn.repeated_every",
-            "nn.repeated_on",
-            "nn.repeated_minute",
-            "nn.repeated_hour",
-            "nn.repeated_day_of_month",
-            "nn.repeated_month",
-            "nn.repeated_day_of_week",
-            "nn.repeated_year",
-            "nn.duration",
-            "nn.duration_type",
             "nn.is_sent",
             "nn.published",
             "nn.created_by",
+            "uu.name AS created_by_name",
             "nn.date_created",
             "nn.modified_by",
+            "uu_986.name AS modified_by_name",
             "nn.date_modified"
         ],
         "leftjoin": [
@@ -956,6 +629,24 @@
                 "alias": "ng",
                 "name": "#__notification_groups",
                 "on": "nn.group_id = ng.id"
+            },
+            {
+                "table": "Notification\\Newsletters\\Frequencies\\Code\\Tables\\Frequencies",
+                "alias": "nnf",
+                "name": "#__notification_newsletters_frequencies",
+                "on": "nn.frequency_id = nnf.id"
+            },
+            {
+                "table": "Users\\Users\\Code\\Tables\\Users",
+                "alias": "uu",
+                "name": "#__users_users",
+                "on": "nn.created_by = uu.id"
+            },
+            {
+                "table": "Users\\Users\\Code\\Tables\\Users",
+                "alias": "uu_986",
+                "name": "#__users_users",
+                "on": "nn.modified_by = uu_986.id"
             }
         ]
     }

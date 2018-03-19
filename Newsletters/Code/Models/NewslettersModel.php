@@ -55,18 +55,6 @@ class NewslettersModel extends BaseModel {
 
         $form = (!empty($form)) ? $form : $this->request->get('form');
 
-        if ($form['how_to_repeat'] == '') {
-            $form['repeated_every'] = '';
-            $form['forever'] = '';
-            $form['repeated'] = '';
-            $form['repeated_minute'] = '';
-            $form['repeated_hour'] = '';
-            $form['repeated_day_of_month'] = '';
-            $form['repeated_month'] = '';
-            $form['repeated_day_of_week'] = '';
-            $form['repeated_year'] = '';
-        }
-
         $newsletter_id = parent::save($form);
 
         $this->sendNewsletter($newsletter_id);
@@ -125,23 +113,19 @@ class NewslettersModel extends BaseModel {
         $start_date_stamp = strtotime($newsletter->start_date);
         $end_date_stamp = strtotime($newsletter->end_date);
 
-        $is_start_time = ($start_date_stamp && $start_date_stamp < time()) ? true : false;
-        $is_end_time = ($end_date_stamp && $end_date_stamp < time()) ? true : false;
+        $is_start_time = ($start_date_stamp && $start_date_stamp > $default_date_stamp) ? true : false;
+        $is_end_time = ($end_date_stamp && $end_date_stamp > $default_date_stamp) ? true : false;
 
-        if ((int) $newsletter->repeated && $start_date_stamp && $end_date_stamp && $start_date_stamp > $default_date_stamp && $end_date_stamp > $default_date_stamp) {
-
-            if ($is_start_time && !$is_end_time) {
-                if (($start_date_stamp <= $send_date_stamp) && ($send_date_stamp <= $end_date_stamp)) {
-                    $send_now = ($send_date_stamp < time()) ? true : false;
-                }
-            } elseif ($is_start_time && !$end_date_stamp) {
-                if ($start_date_stamp <= $send_date_stamp) {
-                    $send_now = ($send_date_stamp < time()) ? true : false;
-                }
-            } elseif (!$is_end_time && !$start_date_stamp) {
-                if ($send_date_stamp <= $end_date_stamp) {
-                    $send_now = ($send_date_stamp < time()) ? true : false;
-                }
+        if ($newsletter->frequency_id && ($is_start_time || $is_end_time) && $send_date_stamp <= time()) {
+           
+            if ($is_start_time && !$is_end_time && $start_date_stamp < $send_date_stamp) {
+                $send_now = true;
+            } elseif ($is_start_time && $is_end_time && $start_date_stamp < $send_date_stamp && $end_date_stamp > $send_date_stamp) {
+                $send_now = true;
+            } elseif (!$is_start_time && $is_end_time && $end_date_stamp > $send_date_stamp) {
+                $send_now = true;
+            } elseif (!$is_start_time && !$is_end_time) {
+                $send_now = ($send_date_stamp < time()) ? true : false;
             }
         } else {
             $send_now = ($send_date_stamp <= time()) ? true : false;
@@ -163,20 +147,27 @@ class NewslettersModel extends BaseModel {
 
         $newsletter = clone $newsletter;
 
-        if ($newsletter->how_to_repeat) {
+        if ($newsletter->frequency_id) {
 
-            $next_cron_str = $newsletter->repeated_minute . ' '
-                    . $newsletter->repeated_hour . ' '
-                    . $newsletter->repeated_day_of_month . ' '
-                    . $newsletter->repeated_month . ' '
-                    . $newsletter->repeated_day_of_week . ' '
-                    . $newsletter->repeated_year . ' '
-            ;
+            $frequency = $this->getFrequency($newsletter->frequency_id);
 
-            $cron = CronExpression::factory($next_cron_str);
-            $next_send_time = $cron->getNextRunDate()->format('Y-m-d H:i:s');
+            if (strtotime($newsletter->end_date) > time()) {
 
-            $newsletter->send_date = $next_send_time;
+                $next_cron_str = $frequency->repeated_minute . ' '
+                        . $frequency->repeated_hour . ' '
+                        . $frequency->repeated_day_of_month . ' '
+                        . $frequency->repeated_month . ' '
+                        . $frequency->repeated_day_of_week . ' '
+                        . $frequency->repeated_year . ' '
+                ;
+
+                $cron = CronExpression::factory($next_cron_str);
+                $next_send_time = $cron->getNextRunDate()->format('Y-m-d H:i:s');
+
+                $newsletter->send_date = $next_send_time;
+            } else {
+                $newsletter->is_sent = 1;
+            }
         } else {
             $newsletter->is_sent = 1;
         }
@@ -184,6 +175,27 @@ class NewslettersModel extends BaseModel {
         $factory->saveRecord('#__notification_newsletters', $newsletter, array('id=:id'), array('id' => $newsletter->id));
 
         return $newsletter;
+    }
+
+    private function getFrequency($frequency_id) {
+
+        $factory = new KazistFactory();
+
+
+        $query = new Query();
+        $query->select('nnf.*');
+        $query->from('#__notification_newsletters_frequencies', 'nnf');
+        if ($frequency_id) {
+            $query->where('id=:id');
+            $query->setParameter('id', $frequency_id);
+        } else {
+            $query->where('1=-1');
+        }
+
+
+        $record = $query->loadObject();
+
+        return $record;
     }
 
     function getNewsletterGroups($newsletter_id) {
@@ -264,6 +276,8 @@ class NewslettersModel extends BaseModel {
         }
 
         $query->orderBy('ns.email');
+
+
 
         $query_str = base64_encode((string) $query);
 

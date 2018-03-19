@@ -22,6 +22,17 @@ use Kazist\Model\BaseModel;
 
 class ScheduledController extends BaseController {
 
+    public function saveAction($form_data = '') {
+
+        $form_data = $this->request->get('form');
+
+        if ($form_data['start_date'] == '') {
+            $form_data['start_date'] = date('Y-m-d H:i:s');
+        }
+        
+        return parent::saveAction($form_data);
+    }
+
     public function editAction() {
 
         $id = $this->request->get('id');

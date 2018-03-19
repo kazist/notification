@@ -22,9 +22,40 @@ use Kazist\Model\BaseModel;
 
 class FrequenciesController extends BaseController {
 
-    public function editAction() {
+    public function addAction() {
 
-        $this->model = new BaseModel();
+        $repeated_every = array();
+        $repeated_on = array();
+        $how_to_repeat_fields = array(
+            array('value' => 'daily', 'text' => 'Daily'),
+            array('value' => 'weekday', 'text' => 'Weekday'),
+            array('value' => 'weekend', 'text' => 'Weekend'),
+            array('value' => 'weekly', 'text' => 'Weekly'),
+            array('value' => 'monthly', 'text' => 'Monthly'),
+            array('value' => 'yearly', 'text' => 'Yearly'),
+        );
+
+        for ($x = 1; $x <= 30; $x++) {
+            $repeated_every[] = array('value' => $x, 'text' => $x);
+        }
+
+        $repeated_on[] = array('value' => '1', 'text' => 'M');
+        $repeated_on[] = array('value' => '2', 'text' => 'T');
+        $repeated_on[] = array('value' => '3', 'text' => 'W');
+        $repeated_on[] = array('value' => '4', 'text' => 'T');
+        $repeated_on[] = array('value' => '5', 'text' => 'F');
+        $repeated_on[] = array('value' => '6', 'text' => 'S');
+        $repeated_on[] = array('value' => '0', 'text' => 'S');
+
+        $this->data_arr['repeated_on'] = $repeated_on;
+        $this->data_arr['repeated_every'] = $repeated_every;
+        $this->data_arr['how_to_repeat_fields'] = $how_to_repeat_fields;
+
+        return parent::addAction();
+    }
+
+    public function editAction($id) {
+
 
         $item = $this->model->getRecord();
 
@@ -57,13 +88,7 @@ class FrequenciesController extends BaseController {
         $data_arr['repeated_every'] = $repeated_every;
         $data_arr['how_to_repeat_fields'] = $how_to_repeat_fields;
 
-        $this->html = $this->render('Notification:Newsletters:Frequencies:Code:views:admin:edit.index.twig', $data_arr);
-
-        $response = $this->response($this->html);
-
-
-
-        return $response;
+        return parent::editAction($id);
     }
 
 }

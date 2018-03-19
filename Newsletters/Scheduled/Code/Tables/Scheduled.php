@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Scheduled
  *
- * @ORM\Table(name="notification_newsletters_scheduled", indexes={@ORM\Index(name="subset_id_index", columns={"subset_id"}), @ORM\Index(name="extension_path_index", columns={"extension_path"})})
+ * @ORM\Table(name="notification_newsletters_scheduled", indexes={@ORM\Index(name="selection_list_index", columns={"selection_list"}), @ORM\Index(name="created_by_index", columns={"created_by"}), @ORM\Index(name="modified_by_index", columns={"modified_by"})})
  * @ORM\Entity
  * @ORM\HasLifecycleCallbacks
  */
@@ -21,13 +21,6 @@ class Scheduled extends \Kazist\Table\BaseTable
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     protected $id;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="subset_id", type="integer", length=11, nullable=true)
-     */
-    protected $subset_id;
 
     /**
      * @var string
@@ -51,27 +44,6 @@ class Scheduled extends \Kazist\Table\BaseTable
     protected $body;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="user_field", type="string", length=255, nullable=true)
-     */
-    protected $user_field;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="date_field", type="string", length=255, nullable=true)
-     */
-    protected $date_field;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="email_field", type="string", length=255, nullable=true)
-     */
-    protected $email_field;
-
-    /**
      * @var integer
      *
      * @ORM\Column(name="wait_period", type="integer", length=11, nullable=true)
@@ -81,23 +53,23 @@ class Scheduled extends \Kazist\Table\BaseTable
     /**
      * @var integer
      *
-     * @ORM\Column(name="repeat_after", type="integer", length=11, nullable=true)
+     * @ORM\Column(name="selection_list", type="integer", length=11, nullable=true)
      */
-    protected $repeat_after;
+    protected $selection_list;
 
     /**
-     * @var integer
+     * @var \DateTime
      *
-     * @ORM\Column(name="repeat_stop", type="integer", length=11, nullable=true)
+     * @ORM\Column(name="start_date", type="datetime", nullable=true)
      */
-    protected $repeat_stop;
+    protected $start_date;
 
     /**
-     * @var integer
+     * @var \DateTime
      *
-     * @ORM\Column(name="is_repeated", type="integer", length=11, nullable=true)
+     * @ORM\Column(name="end_date", type="datetime", nullable=true)
      */
-    protected $is_repeated;
+    protected $end_date;
 
     /**
      * @var integer
@@ -107,44 +79,30 @@ class Scheduled extends \Kazist\Table\BaseTable
     protected $published;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="extension_path", type="string", length=255, nullable=true)
-     */
-    protected $extension_path;
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="scheduled_newsletter_date", type="date", nullable=true)
-     */
-    protected $scheduled_newsletter_date;
-
-    /**
      * @var integer
      *
-     * @ORM\Column(name="created_by", type="integer", length=11, nullable=false)
+     * @ORM\Column(name="created_by", type="integer", length=11, nullable=true)
      */
     protected $created_by;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="date_created", type="datetime", nullable=false)
+     * @ORM\Column(name="date_created", type="datetime", nullable=true)
      */
     protected $date_created;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="modified_by", type="integer", length=11, nullable=false)
+     * @ORM\Column(name="modified_by", type="integer", length=11, nullable=true)
      */
     protected $modified_by;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="date_modified", type="datetime", nullable=false)
+     * @ORM\Column(name="date_modified", type="datetime", nullable=true)
      */
     protected $date_modified;
 
@@ -152,7 +110,7 @@ class Scheduled extends \Kazist\Table\BaseTable
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -160,32 +118,10 @@ class Scheduled extends \Kazist\Table\BaseTable
     }
 
     /**
-     * Set subset_id
-     *
-     * @param integer $subsetId
-     * @return Scheduled
-     */
-    public function setSubsetId($subsetId)
-    {
-        $this->subset_id = $subsetId;
-
-        return $this;
-    }
-
-    /**
-     * Get subset_id
-     *
-     * @return integer 
-     */
-    public function getSubsetId()
-    {
-        return $this->subset_id;
-    }
-
-    /**
-     * Set unique_name
+     * Set uniqueName
      *
      * @param string $uniqueName
+     *
      * @return Scheduled
      */
     public function setUniqueName($uniqueName)
@@ -196,9 +132,9 @@ class Scheduled extends \Kazist\Table\BaseTable
     }
 
     /**
-     * Get unique_name
+     * Get uniqueName
      *
-     * @return string 
+     * @return string
      */
     public function getUniqueName()
     {
@@ -209,6 +145,7 @@ class Scheduled extends \Kazist\Table\BaseTable
      * Set subject
      *
      * @param string $subject
+     *
      * @return Scheduled
      */
     public function setSubject($subject)
@@ -221,7 +158,7 @@ class Scheduled extends \Kazist\Table\BaseTable
     /**
      * Get subject
      *
-     * @return string 
+     * @return string
      */
     public function getSubject()
     {
@@ -232,6 +169,7 @@ class Scheduled extends \Kazist\Table\BaseTable
      * Set body
      *
      * @param string $body
+     *
      * @return Scheduled
      */
     public function setBody($body)
@@ -244,7 +182,7 @@ class Scheduled extends \Kazist\Table\BaseTable
     /**
      * Get body
      *
-     * @return string 
+     * @return string
      */
     public function getBody()
     {
@@ -252,78 +190,10 @@ class Scheduled extends \Kazist\Table\BaseTable
     }
 
     /**
-     * Set user_field
-     *
-     * @param string $userField
-     * @return Scheduled
-     */
-    public function setUserField($userField)
-    {
-        $this->user_field = $userField;
-
-        return $this;
-    }
-
-    /**
-     * Get user_field
-     *
-     * @return string 
-     */
-    public function getUserField()
-    {
-        return $this->user_field;
-    }
-
-    /**
-     * Set date_field
-     *
-     * @param string $dateField
-     * @return Scheduled
-     */
-    public function setDateField($dateField)
-    {
-        $this->date_field = $dateField;
-
-        return $this;
-    }
-
-    /**
-     * Get date_field
-     *
-     * @return string 
-     */
-    public function getDateField()
-    {
-        return $this->date_field;
-    }
-
-    /**
-     * Set email_field
-     *
-     * @param string $emailField
-     * @return Scheduled
-     */
-    public function setEmailField($emailField)
-    {
-        $this->email_field = $emailField;
-
-        return $this;
-    }
-
-    /**
-     * Get email_field
-     *
-     * @return string 
-     */
-    public function getEmailField()
-    {
-        return $this->email_field;
-    }
-
-    /**
-     * Set wait_period
+     * Set waitPeriod
      *
      * @param integer $waitPeriod
+     *
      * @return Scheduled
      */
     public function setWaitPeriod($waitPeriod)
@@ -334,9 +204,9 @@ class Scheduled extends \Kazist\Table\BaseTable
     }
 
     /**
-     * Get wait_period
+     * Get waitPeriod
      *
-     * @return integer 
+     * @return integer
      */
     public function getWaitPeriod()
     {
@@ -344,78 +214,82 @@ class Scheduled extends \Kazist\Table\BaseTable
     }
 
     /**
-     * Set repeat_after
+     * Set selectionList
      *
-     * @param integer $repeatAfter
+     * @param integer $selectionList
+     *
      * @return Scheduled
      */
-    public function setRepeatAfter($repeatAfter)
+    public function setSelectionList($selectionList)
     {
-        $this->repeat_after = $repeatAfter;
+        $this->selection_list = $selectionList;
 
         return $this;
     }
 
     /**
-     * Get repeat_after
+     * Get selectionList
      *
-     * @return integer 
+     * @return integer
      */
-    public function getRepeatAfter()
+    public function getSelectionList()
     {
-        return $this->repeat_after;
+        return $this->selection_list;
     }
 
     /**
-     * Set repeat_stop
+     * Set startDate
      *
-     * @param integer $repeatStop
+     * @param \DateTime $startDate
+     *
      * @return Scheduled
      */
-    public function setRepeatStop($repeatStop)
+    public function setStartDate($startDate)
     {
-        $this->repeat_stop = $repeatStop;
+        $this->start_date = $startDate;
 
         return $this;
     }
 
     /**
-     * Get repeat_stop
+     * Get startDate
      *
-     * @return integer 
+     * @return \DateTime
      */
-    public function getRepeatStop()
+    public function getStartDate()
     {
-        return $this->repeat_stop;
+        return $this->start_date;
     }
 
     /**
-     * Set is_repeated
+     * Set endDate
      *
-     * @param integer $isRepeated
+     * @param \DateTime $endDate
+     *
      * @return Scheduled
      */
-    public function setIsRepeated($isRepeated)
+    public function setEndDate($endDate)
     {
-        $this->is_repeated = $isRepeated;
+        $this->end_date = $endDate;
 
         return $this;
     }
 
     /**
-     * Get is_repeated
+     * Get endDate
      *
-     * @return integer 
+     * @return \DateTime
      */
-    public function getIsRepeated()
+    public function getEndDate()
     {
-        return $this->is_repeated;
+        return $this->end_date;
     }
 
     /**
      * Set published
      *
      * @param integer $published
+     *
      * @return Scheduled
      */
     public function setPublished($published)
@@ -428,7 +302,7 @@ class Scheduled extends \Kazist\Table\BaseTable
     /**
      * Get published
      *
-     * @return integer 
+     * @return integer
      */
     public function getPublished()
     {
@@ -436,55 +310,9 @@ class Scheduled extends \Kazist\Table\BaseTable
     }
 
     /**
-     * Set extension_path
+     * Get createdBy
      *
-     * @param string $extensionPath
-     * @return Scheduled
-     */
-    public function setExtensionPath($extensionPath)
-    {
-        $this->extension_path = $extensionPath;
-
-        return $this;
-    }
-
-    /**
-     * Get extension_path
-     *
-     * @return string 
-     */
-    public function getExtensionPath()
-    {
-        return $this->extension_path;
-    }
-
-    /**
-     * Set scheduled_newsletter_date
-     *
-     * @param \DateTime $scheduledNewsletterDate
-     * @return Scheduled
-     */
-    public function setScheduledNewsletterDate($scheduledNewsletterDate)
-    {
-        $this->scheduled_newsletter_date = $scheduledNewsletterDate;
-
-        return $this;
-    }
-
-    /**
-     * Get scheduled_newsletter_date
-     *
-     * @return \DateTime 
-     */
-    public function getScheduledNewsletterDate()
-    {
-        return $this->scheduled_newsletter_date;
-    }
-
-    /**
-     * Get created_by
-     *
-     * @return integer 
+     * @return integer
      */
     public function getCreatedBy()
     {
@@ -492,9 +320,9 @@ class Scheduled extends \Kazist\Table\BaseTable
     }
 
     /**
-     * Get date_created
+     * Get dateCreated
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDateCreated()
     {
@@ -502,9 +330,9 @@ class Scheduled extends \Kazist\Table\BaseTable
     }
 
     /**
-     * Get modified_by
+     * Get modifiedBy
      *
-     * @return integer 
+     * @return integer
      */
     public function getModifiedBy()
     {
@@ -512,9 +340,9 @@ class Scheduled extends \Kazist\Table\BaseTable
     }
 
     /**
-     * Get date_modified
+     * Get dateModified
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDateModified()
     {
@@ -528,3 +356,4 @@ class Scheduled extends \Kazist\Table\BaseTable
         // Add your code here
     }
 }
+

@@ -23,6 +23,7 @@ use Notification\Newsletters\Scheduled\Models\ScheduledModel;
 
 class ScheduledController extends BaseController {
 
+  
     public function cronscheduledAction() {
 
         $this->model->sendScheduledList();

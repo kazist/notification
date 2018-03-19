@@ -62,7 +62,7 @@ class NewslettersController extends BaseController {
         $data_arr['how_to_repeat_fields'] = $how_to_repeat_fields;
         $data_arr['body'] = $body;
         $data_arr['item'] = $item;
-        Notification\Newsletters\Code\Controllers;
+    
         $this->html = $this->render('Notification:Newsletters:Code:views:edit.index.twig', $data_arr);
 
         $response = $this->response($this->html);
